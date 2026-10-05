@@ -1,0 +1,384 @@
+:root {
+  --color-ink: #22223b;
+  --color-paper: #f2e9e4;
+  --color-accent: #4361ee;
+  --font-ui: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  overflow: hidden;
+}
+
+.app {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+}
+
+/* Touch drags place contraptions; never let them scroll or zoom the page. */
+.app canvas {
+  touch-action: none;
+}
+
+.board {
+  position: absolute;
+  inset: 0;
+}
+
+.board:focus {
+  outline: none;
+}
+
+.board:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+.app__hint {
+  margin: 0 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+  color: color-mix(in srgb, var(--color-ink) 75%, transparent);
+}
+
+.app__header {
+  position: absolute;
+  inset: 0.6rem 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.app__header h1,
+.app__hint {
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--color-paper) 82%, transparent);
+  backdrop-filter: blur(4px);
+}
+
+.app__header h1 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.app__actions {
+  display: flex;
+  gap: 0.5rem;
+  pointer-events: auto;
+}
+
+.app__actions select {
+  padding: 0.4rem 0.6rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+  font-weight: 600;
+}
+
+.muted {
+  opacity: 0.65;
+}
+
+button {
+  padding: 0.45rem 0.9rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.5rem;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.primary {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(34 34 59 / 0.35);
+}
+
+.panel {
+  min-width: min(22rem, 90vw);
+  max-width: 90vw;
+  max-height: 90dvh;
+  overflow: auto;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  background: var(--color-paper);
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.25);
+}
+
+.panel h2 {
+  margin: 0 0 0.5rem;
+}
+
+.score {
+  margin: 0 0 0.75rem;
+  font-size: 3rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.breakdown {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.25rem 1.5rem;
+  margin: 0 0 1rem;
+}
+
+.breakdown dd {
+  margin: 0;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.name-entry {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.name-entry .row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.name-entry input {
+  flex: 1;
+  padding: 0.45rem 0.6rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.board {
+  width: 100%;
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.board th,
+.board td {
+  padding: 0.3rem 0.5rem;
+  text-align: left;
+}
+
+.board .num {
+  text-align: right;
+}
+
+.board thead th {
+  border-bottom: 2px solid var(--color-ink);
+}
+
+.board__mine {
+  background: rgb(67 97 238 / 0.15);
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.panel--menu {
+  text-align: center;
+  min-width: min(20rem, 90vw);
+}
+
+.panel--menu h1 {
+  margin: 0 0 0.35rem;
+}
+
+.panel--wide {
+  width: min(52rem, 94vw);
+}
+
+.menu-actions {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+
+.menu-actions button {
+  min-height: 2.75rem;
+}
+
+.scene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 0 0 1rem;
+  list-style: none;
+}
+
+.scene-card {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem;
+  border: 2px solid var(--color-ink);
+  border-radius: 0.75rem;
+}
+
+.scene-card h3 {
+  margin: 0;
+}
+
+.scene-card .row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.scene-card__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The generated thumbnail sits over a gradient fallback, which shows if the image is missing. */
+.thumb {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 6.5rem;
+  border-radius: 0.5rem;
+  background-color: #c9ada7;
+  background-image: var(--thumb, none), var(--fallback, none);
+  background-size: cover;
+  background-position: center;
+}
+
+.thumb__lock {
+  padding: 0.3rem 0.5rem;
+  border-radius: 999px;
+  background: rgb(34 34 59 / 0.75);
+  font-size: 1.2rem;
+}
+
+.thumb--first-steps {
+  --fallback: linear-gradient(160deg, #c9ada7 40%, #4a4e69 41%, #4a4e69 70%, #52b788 71%);
+}
+
+.thumb--up-the-wall {
+  --fallback: linear-gradient(180deg, #9a8c98 0 35%, #4a4e69 36% 55%, #22223b 56%);
+}
+
+.thumb--the-gap {
+  --fallback: linear-gradient(90deg, #4a4e69 0 38%, #f2e9e4 38% 62%, #4a4e69 62%);
+}
+
+.thumb--clockwork {
+  --fallback: radial-gradient(circle at 50% 40%, #e9c46a 0 25%, #6d597a 26%);
+}
+
+.thumb--grand-finale {
+  --fallback: linear-gradient(180deg, #8d99ae 0 30%, #f4a261 31% 60%, #4a4e69 61%);
+}
+
+.thumb--sandbox {
+  --fallback: repeating-linear-gradient(45deg, #4a4e69, #4a4e69 8px, #9a8c98 8px, #9a8c98 16px);
+}
+
+button.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.overlay--menu {
+  background-color: rgb(34 34 59 / 0.55);
+  background-image: linear-gradient(rgb(34 34 59 / 0.35), rgb(34 34 59 / 0.35)), var(--key-art, none);
+  background-size: cover;
+  background-position: center;
+}
+
+.settings-list {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.toggle button {
+  min-width: 4.5rem;
+}
+
+.hint-card {
+  position: absolute;
+  top: 3.4rem;
+  left: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: min(28rem, calc(100vw - 2rem));
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.75rem;
+  background: var(--color-paper);
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.2);
+}
+
+.hint-card p {
+  margin: 0;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+kbd {
+  padding: 0.05rem 0.35rem;
+  border: 1px solid currentColor;
+  border-radius: 0.25rem;
+  font-family: inherit;
+}

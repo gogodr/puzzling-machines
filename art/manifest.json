@@ -1,0 +1,45 @@
+{
+  "atlas": { "width": 2048, "padding": 6, "compactMax": 320, "longMax": 1024 },
+  "sheets": [
+    {
+      "file": "sheet-a-parts.png",
+      "cols": 4,
+      "rows": 3,
+      "names": [
+        "ball",
+        "spinner",
+        "fan",
+        null,
+        "trampoline",
+        "trampoline_squash",
+        "sling",
+        "sling_pulled",
+        "flag",
+        "flag_celebrate",
+        "wrecking_ball",
+        "domino"
+      ]
+    },
+    {
+      "file": "sheet-b-hardware.png",
+      "cols": 4,
+      "rows": 2,
+      "names": ["bracket", "fulcrum", "catapult_stand", "pulley", "pipe_curve", "spark", "puff", "cog"]
+    },
+    {
+      "file": "sheet-c-long.png",
+      "cols": 1,
+      "rows": 7,
+      "long": true,
+      "names": ["plank", "belt", "seesaw_plank", "catapult_arm", "platform", "pipe", "steel_bar"]
+    }
+  ],
+  "backgrounds": {
+    "bg-first-steps": "first-steps",
+    "bg-up-the-wall": "up-the-wall",
+    "bg-the-gap": "the-gap",
+    "bg-clockwork": "clockwork",
+    "bg-grand-finale": "grand-finale"
+  },
+  "keyArt": "key-art.png"
+}
